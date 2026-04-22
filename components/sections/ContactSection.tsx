@@ -49,8 +49,12 @@ export default function ContactSection() {
   const onSubmit = async (data: F) => {
     setErr(false);
     try {
-      await new Promise((r) => setTimeout(r, 900));
-      console.log(data);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error();
       setOk(true); reset();
     } catch { setErr(true); }
   };
